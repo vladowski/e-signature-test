@@ -1,0 +1,495 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "E-Signature API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/documents/upload": {
+            "post": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Upload a new document",
+                "operationId": "8e3a5d070f386f819b02061c0ef0adc1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "document"
+                                ],
+                                "properties": {
+                                    "document": {
+                                        "description": "The PDF document file to upload",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Document uploaded successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Document"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/documents": {
+            "get": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Get all documents for the current user",
+                "operationId": "6ffe8b4fcb81f8414d98ed8bce316646",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Document"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/documents/{uuid}": {
+            "get": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Get a specific document by UUID",
+                "operationId": "0defa23c87b45d66218e948bfacfe4d9",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the document to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Document"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Document not found"
+                    },
+                    "403": {
+                        "description": "Access denied"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/signature-requests/{uuid}": {
+            "get": {
+                "tags": [
+                    "Signature Requests"
+                ],
+                "summary": "Get a specific signature request",
+                "operationId": "f1cc29a8c403b78b27793e929ee3e30d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the signature request",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SignatureRequest"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Signature Requests"
+                ],
+                "summary": "Delete a signature request",
+                "operationId": "476e7bdd0d798876d1ff196bc2348cce",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the signature request to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Signature request deleted successfully"
+                    },
+                    "403": {
+                        "description": "Access denied"
+                    },
+                    "404": {
+                        "description": "Signature request not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/signature-requests": {
+            "get": {
+                "tags": [
+                    "Signature Requests"
+                ],
+                "summary": "Get all signature requests",
+                "operationId": "058ddba6009925d92ccff91e7c5244a8",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SignatureRequest"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Signature Requests"
+                ],
+                "summary": "Create a new signature request",
+                "operationId": "031897994114ffc76205f7e8f85b991d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "document_id",
+                                    "signer_id"
+                                ],
+                                "properties": {
+                                    "document_id": {
+                                        "description": "ID of the document to be signed",
+                                        "type": "string"
+                                    },
+                                    "signer_id": {
+                                        "description": "ID of the user who will sign the document",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Signature request created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SignatureRequest"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/signature-requests/{uuid}/sign": {
+            "post": {
+                "tags": [
+                    "Signature Requests"
+                ],
+                "summary": "Sign a signature request",
+                "operationId": "5344f7bed87ad6ef8622196d63cddf4a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID of the signature request to be signed",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "key",
+                                    "cert"
+                                ],
+                                "properties": {
+                                    "key": {
+                                        "description": "Private key for signing",
+                                        "type": "string"
+                                    },
+                                    "cert": {
+                                        "description": "Certificate for signing",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Document signed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SignatureRequest"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request (e.g., document already signed)"
+                    },
+                    "403": {
+                        "description": "Access denied"
+                    },
+                    "404": {
+                        "description": "Signature request not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/signature-requests/{uuid}/deny": {
+            "post": {
+                "tags": [
+                    "Signature Requests"
+                ],
+                "summary": "Deny a signature request",
+                "operationId": "5bc158dfbd4b0ece5fa944a6adca9bfb",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of the signature request to be denied",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Signature request denied successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SignatureRequest"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Access denied"
+                    },
+                    "404": {
+                        "description": "Signature request not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Document": {
+                "title": "Document",
+                "required": [
+                    "id",
+                    "file_path",
+                    "user_id",
+                    "status"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "UUID of the document",
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "file_path": {
+                        "description": "File path of the document",
+                        "type": "string",
+                        "example": "documents/yourfile.pdf"
+                    },
+                    "user_id": {
+                        "description": "ID of the user who owns the document",
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "signed_file_path": {
+                        "description": "File path of the signed document",
+                        "type": "string",
+                        "example": "null",
+                        "nullable": true
+                    },
+                    "signed_at": {
+                        "description": "Signing timestamp",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "null",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "Creation timestamp",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-08-19T14:00:00.000000Z"
+                    },
+                    "updated_at": {
+                        "description": "Last update timestamp",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-08-19T14:00:00.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "SignatureRequest": {
+                "title": "Signature Request",
+                "required": [
+                    "id",
+                    "document_id",
+                    "requester_id",
+                    "signer_id",
+                    "status"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "UUID of the signature request",
+                        "type": "string",
+                        "example": "f54c191a-143a-4130-84e4-5529db82f819"
+                    },
+                    "document_id": {
+                        "description": "UUID of the associated document",
+                        "type": "string",
+                        "example": "b11ded5b-86ea-4a97-890f-9d0561bd79de"
+                    },
+                    "requester_id": {
+                        "description": "ID of the user who requested the signature",
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "signer_id": {
+                        "description": "ID of the user who will sign the document",
+                        "type": "string",
+                        "example": "2"
+                    },
+                    "status": {
+                        "description": "Status of the signature request",
+                        "type": "string",
+                        "example": "pending"
+                    },
+                    "created_at": {
+                        "description": "Creation timestamp",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-08-19T14:00:00.000000Z"
+                    },
+                    "updated_at": {
+                        "description": "Last update timestamp",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-08-19T14:00:00.000000Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Documents",
+            "description": "Documents"
+        },
+        {
+            "name": "Signature Requests",
+            "description": "Signature Requests"
+        }
+    ]
+}
