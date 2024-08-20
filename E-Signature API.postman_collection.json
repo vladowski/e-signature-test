@@ -1,0 +1,547 @@
+{
+	"info": {
+		"_postman_id": "3b249aa5-77fa-45b8-bc78-7e83b1651fa3",
+		"name": "E-Signature API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3365278",
+		"_collection_link": "https://interstellar-zodiac-809440.postman.co/workspace/New-Team-Workspace~23ba1d1e-2dfc-4798-9b70-abd0af69b73e/collection/3365278-3b249aa5-77fa-45b8-bc78-7e83b1651fa3?action=share&source=collection_link&creator=3365278"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "CSRF",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "{{base_url}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/sanctum/csrf-cookie",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sanctum",
+								"csrf-cookie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "{{base_url}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{{user_name}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{user_email}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{user_password}}",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "{{user_password}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"register"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "{{user_email}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{user_password}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/user",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Documents",
+			"item": [
+				{
+					"name": "Upload",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('document_id', pm.response.json().id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "document",
+									"type": "file",
+									"src": "/Users/vladlenmikhalov/Downloads/Back-end developer.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/documents/upload",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"documents",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/documents/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"documents",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/documents/{{document_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"documents",
+								"{{document_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Signature Requests",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('signature_request_id', pm.response.json().id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "document_id",
+									"value": "{{document_id}}",
+									"type": "text"
+								},
+								{
+									"key": "signer_email",
+									"value": "{{signer_email}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/signature-requests/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"signature-requests",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/signature-requests/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"signature-requests",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/signature-requests/{{signature_request_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"signature-requests",
+								"{{signature_request_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "key",
+									"value": "{{key}}",
+									"type": "text"
+								},
+								{
+									"key": "cert",
+									"value": "{{cert}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/signature-requests/{{signature_request_id}}/sign",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"signature-requests",
+								"{{signature_request_id}}",
+								"sign"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deny",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/signature-requests/{{signature_request_id}}/deny",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"signature-requests",
+								"{{signature_request_id}}",
+								"deny"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/signature-requests/{{signature_request_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"signature-requests",
+								"{{signature_request_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"const jar = pm.cookies.jar();",
+					"",
+					"jar.get('localhost', 'XSRF-TOKEN', (err, cookie) => {",
+					"    pm.request.addHeader({",
+					"        key: \"X-XSRF-TOKEN\",",
+					"        value: cookie",
+					"    });",
+					"",
+					"    pm.request.addHeader({",
+					"        key: \"Origin\",",
+					"        value: pm.environment.get('base_url')",
+					"    });",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "user_email",
+			"value": "qwe@mail.com"
+		},
+		{
+			"key": "user_password",
+			"value": "1234pass"
+		},
+		{
+			"key": "token_name",
+			"value": "token-name"
+		},
+		{
+			"key": "frontend_url",
+			"value": "http://localhost:3000"
+		}
+	]
+}
